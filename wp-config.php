@@ -20,11 +20,14 @@
 
 //Using environment variables for DB connection information
 
-$connectstr_dbhost = '';
-$connectstr_dbname = '';
-$connectstr_dbusername = '';
-$connectstr_dbpassword = '';
+$connectstr_dbhost = 'wetown-mysqldbserver.mysql.database.azure.com';
+$connectstr_dbname = 'mysqldatabase57638';
+$connectstr_dbusername = 'mysqldbuser@wetown-mysqldbserver';
+$connectstr_dbpassword = 'TKCben123';
 
+if (isset($_SERVER['MYSQLCONNSTR_localdb']))
+{
+//Windows app service
 foreach ($_SERVER as $key => $value) {
     if (strpos($key, "MYSQLCONNSTR_") !== 0) {
         continue;
@@ -34,20 +37,28 @@ foreach ($_SERVER as $key => $value) {
     $connectstr_dbname = preg_replace("/^.*Database=(.+?);.*$/", "\\1", $value);
     $connectstr_dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
     $connectstr_dbpassword = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
+   }
+   
+   
+}
+else
+{
+    $connectstr_dbhost = getenv('DATABASE_HOST');
+    $connectstr_dbname = getenv('DATABASE_NAME');;
+    $connectstr_dbusername = getenv('DATABASE_USERNAME');;
+    $connectstr_dbpassword = getenv('DATABASE_PASSWORD');
 }
 
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', $connectstr_dbname);
+define('DB_NAME', getenv('DATABASE_NAME'));
 
 /** MySQL database username */
-define('DB_USER', $connectstr_dbusername);
+define('DB_USER', getenv('DATABASE_USERNAME'));
 
 /** MySQL database password */
-define('DB_PASSWORD', $connectstr_dbpassword);
+define('DB_PASSWORD',getenv('DATABASE_PASSWORD'));
 
 /** MySQL hostname */
-define('DB_HOST', $connectstr_dbhost);
+define('DB_HOST', getenv('DATABASE_HOST'));
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -95,7 +106,10 @@ $table_prefix  = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+ini_set('display_errors', 0);
 
 /* That's all, stop editing! Happy blogging. */
 
