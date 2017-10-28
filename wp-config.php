@@ -20,10 +20,10 @@
 
 //Using environment variables for DB connection information
 
-$connectstr_dbhost = '';
-$connectstr_dbname = '';
-$connectstr_dbusername = '';
-$connectstr_dbpassword = '';
+$connectstr_dbhost = 'localhost';
+$connectstr_dbname = 'waws-prod-hk1-025.ftp.azurewebsites.windows.net';
+$connectstr_dbusername = 'wetown\$wetown';
+$connectstr_dbpassword = '7ylezWi8b2x7DZu8SB2orNC9xt6vvvEW3ZkB354sEAmfBFj0KZ3dEEA9YBRB';
 
 foreach ($_SERVER as $key => $value) {
     if (strpos($key, "MYSQLCONNSTR_") !== 0) {
